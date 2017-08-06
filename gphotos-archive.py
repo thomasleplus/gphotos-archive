@@ -68,7 +68,7 @@ def get_photos(service, modified_time):
 def archive_photos(service, photos):
     for photo in photos:
         print(photo['name'])
-        service.files().trash(fileId = photo['id']).execute()
+        service.files().update(fileId = photo['id'], body = { 'trashed' : True }).execute()
 
 def main():
     signal.signal(signal.SIGINT, signal_handler)
