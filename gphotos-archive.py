@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/bin/python3.8
 
 from __future__ import print_function
 import datetime
