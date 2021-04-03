@@ -60,14 +60,13 @@ def get_photos(service, modified_time):
     photos = []
     next_page = None
     while True:
-        results = service.files().
-        list(q='trashed=false and modifiedTime < \''
-             + modified_time
-             + '\'',
-             spaces='photos',
-             pageSize=1000,
-             fields="nextPageToken, files(id, name)",
-             pageToken=next_page).execute()
+        results = service.files().list(q='trashed=false and modifiedTime < \''
+                                       + modified_time
+                                       + '\'',
+                                       spaces='photos',
+                                       pageSize=1000,
+                                       fields="nextPageToken, files(id, name)",
+                                       pageToken=next_page).execute()
         items = results.get('files', [])
         if not items:
             break
