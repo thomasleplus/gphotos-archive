@@ -1,7 +1,6 @@
 #!/usr/local/bin/python3.8
 
 from __future__ import print_function
-import datetime
 import httplib2
 import os
 import signal
@@ -11,7 +10,6 @@ from apiclient import discovery
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
-from datetime import datetime, timedelta
 
 SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.photos.readonly https://picasaweb.google.com/data/'
 CLIENT_SECRET_FILE = 'client_secret.json'
@@ -21,14 +19,16 @@ USER_AGENT = 'Google Photos Archive'
 try:
     import argparse
     parser = argparse.ArgumentParser(parents=[tools.argparser])
-    parser.add_argument('modified_time', nargs=1, help='max modification time in ISO-8601 format (e.g. 2017-15-01T16:45:50)')
+    parser.add_argument('modified_time',
+                        nargs=1,
+                        help='max modification time in ISO-8601 format (e.g. 2017-15-01T16:45:50)')
     args = parser.parse_args()
 except ImportError:
     args = None
 
 
 def signal_handler(signal, frame):
-    print('');
+    print('')
     sys.exit(0)
 
 
@@ -72,7 +72,8 @@ def get_photos(service, modified_time):
 def archive_photos(service, photos):
     for photo in photos:
         print(photo['name'])
-        service.files().update(fileId = photo['id'], body = {'trashed': True}).execute()
+        service.files().update(fileId=photo['id'],
+                               body={'trashed': True}).execute()
 
 
 def main():
