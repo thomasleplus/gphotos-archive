@@ -26,9 +26,11 @@ try:
 except ImportError:
     args = None
 
+
 def signal_handler(signal, frame):
     print('');
     sys.exit(0)
+
 
 def get_credentials():
     credential_dir = os.path.join(os.path.expanduser('~'), '.credentials')
@@ -50,6 +52,7 @@ def get_credentials():
             credentials = tools.run(flow, store)
     return credentials
 
+
 def get_photos(service, modified_time):
     photos = []
     next_page = None
@@ -65,10 +68,12 @@ def get_photos(service, modified_time):
             break
     return photos
 
+
 def archive_photos(service, photos):
     for photo in photos:
         print(photo['name'])
-        service.files().update(fileId = photo['id'], body = { 'trashed' : True }).execute()
+        service.files().update(fileId = photo['id'], body = {'trashed': True}).execute()
+
 
 def main():
     signal.signal(signal.SIGINT, signal_handler)
@@ -79,8 +84,9 @@ def main():
     photos = get_photos(service, modified_time)
     print('Found {0} photo(s) older than {1}'.format(len(photos), modified_time))
     if photos:
-        raw_input('Press Enter to continue...')
+        input('Press Enter to continue...')
         archive_photos(service, photos)
+
 
 if __name__ == '__main__':
     main()
