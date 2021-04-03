@@ -11,7 +11,9 @@ from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
 
-SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.photos.readonly https://picasaweb.google.com/data/'
+SCOPES = 'https://www.googleapis.com/auth/drive \
+https://www.googleapis.com/auth/drive.photos.readonly \
+https://picasaweb.google.com/data/'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'gphotos-archive'
 USER_AGENT = 'Google Photos Archive'
@@ -21,7 +23,8 @@ try:
     parser = argparse.ArgumentParser(parents=[tools.argparser])
     parser.add_argument('modified_time',
                         nargs=1,
-                        help='max modification time in ISO-8601 format (e.g. 2017-15-01T16:45:50)')
+                        help='max modification time in ISO-8601 format \
+                        (e.g. 2017-15-01T16:45:50)')
     args = parser.parse_args()
 except ImportError:
     args = None
@@ -57,7 +60,14 @@ def get_photos(service, modified_time):
     photos = []
     next_page = None
     while True:
-        results = service.files().list(q='trashed=false and modifiedTime < \'' + modified_time + '\'', spaces='photos', pageSize=1000, fields="nextPageToken, files(id, name)", pageToken=next_page).execute()
+        results = service.files().
+        list(q='trashed=false and modifiedTime < \''
+             + modified_time
+             + '\'',
+             spaces='photos',
+             pageSize=1000,
+             fields="nextPageToken, files(id, name)",
+             pageToken=next_page).execute()
         items = results.get('files', [])
         if not items:
             break
@@ -83,7 +93,8 @@ def main():
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('drive', 'v3', http=http)
     photos = get_photos(service, modified_time)
-    print('Found {0} photo(s) older than {1}'.format(len(photos), modified_time))
+    print('Found {0} photo(s) older than {1}'.
+          format(len(photos), modified_time))
     if photos:
         input('Press Enter to continue...')
         archive_photos(service, photos)
