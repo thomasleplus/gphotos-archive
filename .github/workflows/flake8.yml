@@ -9,7 +9,7 @@ on:
 
 jobs:
   check:
-    name: Check
+    name: Check with Flake8
     runs-on: ubuntu-latest
     steps:
     - name: Check out
