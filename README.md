@@ -1,4 +1,5 @@
-# gphotos-archive
+# Google Photos Archive
+
 Archiving tool for Google Photos
 
 [![Flake8](https://github.com/thomasleplus/gphotos-archive/workflows/Flake8/badge.svg)](https://github.com/thomasleplus/gphotos-archive/actions?query=workflow:"Flake8")
