@@ -5,7 +5,7 @@ on:
   push:
   pull_request:
   schedule:
-  - cron: '0 0 * * 0'
+    - cron: "0 0 * * 0"
   workflow_dispatch:
 
 permissions: {}
@@ -15,9 +15,9 @@ jobs:
     name: Check with Flake8
     runs-on: ubuntu-latest
     steps:
-    - name: Check out
-      uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-    - name: Install Flake8
-      run: sudo python -m pip install flake8
-    - name: Run Flake8
-      run: flake8 *.py
+      - name: Check out
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      - name: Install Flake8
+        run: sudo python -m pip install flake8
+      - name: Run Flake8
+        run: flake8 *.py
