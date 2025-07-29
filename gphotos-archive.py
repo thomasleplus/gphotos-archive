@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3.8
+#!/usr/bin/python3
 
 from __future__ import print_function
 import httplib2
@@ -6,7 +6,7 @@ import os
 import signal
 import sys
 
-from apiclient import discovery
+from googleapiclient import discovery
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
@@ -21,10 +21,10 @@ USER_AGENT = 'Google Photos Archive'
 try:
     import argparse
     parser = argparse.ArgumentParser(parents=[tools.argparser])
-    parser.add_argument('modified_time',
+    parser.add_argument('query',
                         nargs=1,
-                        help='max modification time in ISO-8601 format \
-                        (e.g. 2017-15-01T16:45:50)')
+                        help='selection query \
+                        (e.g. "modifiedTime < \'2017-15-01T16:45:50\'")')
     args = parser.parse_args()
 except ImportError:
     args = None
@@ -56,13 +56,13 @@ def get_credentials():
     return credentials
 
 
-def get_photos(service, modified_time):
+def get_photos(service, query):
     photos = []
     next_page = None
     while True:
-        results = service.files().list(q='trashed=false and modifiedTime < \''
-                                       + modified_time
-                                       + '\'',
+        results = service.files().list(q='trashed=false and ('
+                                       + query
+                                       + ')',
                                        spaces='photos',
                                        pageSize=1000,
                                        fields="nextPageToken, files(id, name)",
@@ -87,13 +87,13 @@ def archive_photos(service, photos):
 
 def main():
     signal.signal(signal.SIGINT, signal_handler)
-    modified_time = args.modified_time[0]
+    query = args.query[0]
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('drive', 'v3', http=http)
-    photos = get_photos(service, modified_time)
-    print('Found {0} photo(s) older than {1}'.
-          format(len(photos), modified_time))
+    photos = get_photos(service, query)
+    print('Found {0} photo(s) matching query "{1}"'.
+          format(len(photos), query))
     if photos:
         input('Press Enter to continue...')
         archive_photos(service, photos)
