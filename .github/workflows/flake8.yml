@@ -19,7 +19,17 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
       - name: Install Flake8
         shell: bash
-        run: sudo python -m pip install flake8
+        run: |
+          set -euo pipefail
+          IFS=$'\n\t'
+          sudo pipx ensurepath --global
+          sudo pipx install --global flake8==7.3.0
+          if sudo pipx upgrade-all --global | tee -a /dev/stderr | grep -q -e .; then
+            exit 1
+          fi
       - name: Run Flake8
         shell: bash
-        run: flake8 *.py
+        run: |
+          set -euo pipefail
+          IFS=$'\n\t'
+          flake8 *.py
