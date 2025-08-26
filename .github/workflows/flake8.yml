@@ -22,9 +22,9 @@ jobs:
         run: |
           set -euo pipefail
           IFS=$'\n\t'
-          sudo pipx ensurepath --global
-          sudo pipx install --global flake8==7.3.0
-          if sudo pipx upgrade flake8 --global | tee -a /dev/stderr | grep -q -e '^upgraded '; then
+          pipx ensurepath
+          pipx install flake8==7.3.0
+          if pipx upgrade flake8 | tee -a /dev/stderr | grep -q -e '^upgraded '; then
             exit 1
           fi
       - name: Run Flake8
