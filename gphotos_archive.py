@@ -1,4 +1,5 @@
 """Google Photos archiving script."""
+
 import argparse
 import os
 import signal
@@ -18,15 +19,14 @@ APPLICATION_NAME = "gphotos-archive"
 USER_AGENT = "Google Photos Archive"
 
 try:
-
     parser = argparse.ArgumentParser(parents=[tools.argparser])
     parser.add_argument(
         "query",
         nargs=1,
         help="selection query \
-                        (e.g. \"modifiedTime < \'2017-15-01T16:45:50\'\")",
+                        (e.g. \"modifiedTime < '2017-15-01T16:45:50'\")",
     )
-    ARGS: Namespace = parser.parse_args()
+    ARGS: Namespace | None = parser.parse_args()
 except ImportError:
     ARGS = None
 
