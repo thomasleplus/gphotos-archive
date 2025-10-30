@@ -48,7 +48,7 @@ pip install google-api-python-client oauth2client httplib2
 
 Place your downloaded `client_secret.json` file in:
 
-```
+```bash
 ~/.credentials/gphotos-archive/client_secret.json
 ```
 
@@ -65,16 +65,19 @@ python gphotos_archive.py "<query>"
 ### Query Examples
 
 Archive photos modified before a specific date:
+
 ```bash
 python gphotos_archive.py "modifiedTime < '2017-01-15T16:45:50'"
 ```
 
 Archive photos modified after a specific date:
+
 ```bash
 python gphotos_archive.py "modifiedTime > '2020-12-31T23:59:59'"
 ```
 
 Archive photos within a date range:
+
 ```bash
 python gphotos_archive.py "modifiedTime > '2015-01-01T00:00:00' and modifiedTime < '2016-01-01T00:00:00'"
 ```
@@ -114,6 +117,7 @@ Subsequent runs will use the saved credentials automatically.
 ### Authentication Errors
 
 If you encounter authentication issues:
+
 1. Delete `~/.credentials/gphotos-archive/user_token.json`
 2. Run the script again to re-authorize
 
