@@ -136,7 +136,7 @@ If you encounter authentication issues:
 
 ## License
 
-See LICENSE file for details.
+See [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
