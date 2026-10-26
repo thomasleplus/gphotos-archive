@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Google Photos archiving script.
 
 This script allows you to bulk archive (trash) photos in Google Photos based on
