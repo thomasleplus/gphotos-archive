@@ -55,7 +55,7 @@ def signal_handler(_signal, _frame):
 
     Allows the user to interrupt the script execution cleanly.
     """
-    print("")
+    print()
     sys.exit(0)
 
 
